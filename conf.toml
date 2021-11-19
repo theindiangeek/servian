@@ -1,0 +1,7 @@
+"DbUser" = "admin"
+"DbPassword" = "admin"
+"DbName" = "servian"
+"DbPort" = "5432"
+"DbHost" = "postgres"
+"ListenHost" = "0.0.0.0"
+"ListenPort" = "3000"
