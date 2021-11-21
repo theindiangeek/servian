@@ -40,4 +40,3 @@ ENTRYPOINT ./TechChallengeApp updatedb && ./TechChallengeApp serve
 #ENTRYPOINT ["/bin/sh", "-c", "sleep 1000000"]
 #ENTRYPOINT /bin/sh
 #ENTRYPOINT ./TechChallengeApp
-[root@ip-172-31-33-244 TechChal
