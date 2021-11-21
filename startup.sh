@@ -8,9 +8,10 @@ sudo chmod +x /bin/docker-compose
 
 cd /opt/
 git clone https://github.com/servian/TechChallengeApp/
-command cp conf.toml TechChallengeApp/ || cp conf.toml TechChallengeApp/
-command cp docker-compose.yaml TechChallengeApp/ || cp docker-compose.yaml TechChallengeApp/
-command cp Dockerfile TechChallengeApp/ || cp Dockerfile TechChallengeApp/
+git clone https://github.com/theindiangeek/servian
+command cp servian/conf.toml TechChallengeApp/ || cp servian/conf.toml TechChallengeApp/
+command cp servian/docker-compose.yaml TechChallengeApp/ || cp servian/docker-compose.yaml TechChallengeApp/
+command cp servian/Dockerfile TechChallengeApp/ || cp servian/Dockerfile TechChallengeApp/
 cd TechChallengeApp/
 
 docker build -t servian .
