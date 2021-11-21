@@ -26,7 +26,7 @@ locals {
         from_port        = 22
         to_port          = 22
         protocol         = "tcp"
-        cidr_blocks      = ["111.93.45.50/32"]
+        cidr_blocks      = ["0.0.0.0/0"]
       }]
       egress = [{
         description      = "Allow all outbound access"

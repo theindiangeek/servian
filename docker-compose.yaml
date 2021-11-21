@@ -17,8 +17,8 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin
       #- POSTGRES_DB=servian
-    env_file:
-    - database.env # configure postgres
+      #env_file:
+      #- database.env # configure postgres
 #    volumes:
 #    - database-data:/var/lib/postgresql/data/ # persist data even if container shuts down
   servian:
