@@ -10,11 +10,13 @@ module "vpc" {
     Name = "test-vpc"
   }
 }
+
 module "subnet-private-a" {
   source = "./subnet"
   vpc_id = module.vpc.id
   cidr_block = "10.5.200.0/24"
   availability_zone = "ap-south-1a"
+  ng_id  = module.ng-a.id
   common-tags = {
     Name = "servian-assignment-subnet-private-ap-south-1a"
   }
@@ -24,6 +26,7 @@ module "subnet-private-b" {
   source = "./subnet"
   vpc_id = module.vpc.id
   cidr_block = "10.5.201.0/24"
+  ng_id  = module.ng-b.id
   availability_zone = "ap-south-1b"
   common-tags = {
     Name = "servian-assignment-subnet-private-ap-south-1b"
@@ -34,6 +37,7 @@ module "subnet-private-c" {
   source = "./subnet"
   vpc_id = module.vpc.id
   cidr_block = "10.5.202.0/24"
+  ng_id  = module.ng-c.id
   availability_zone = "ap-south-1c"
   common-tags = {
     Name = "servian-assignment-subnet-private-ap-south-1c"
@@ -75,6 +79,22 @@ module "subnet-app-with-ig-c" {
     Name = "servian-assignment-subnet-app-with-internet-gateway-ap-south-1c"
   }
 }
+
+module "ng-a" {
+  source = "./ng"
+  subnet_id = module.subnet-private-a.id
+}
+
+module "ng-b" {
+  source = "./ng"
+  subnet_id = module.subnet-private-b.id
+}
+
+module "ng-c" {
+  source = "./ng"
+  subnet_id = module.subnet-private-c.id
+}
+
 module "sg-public" {
   source = "./sg"
   sg = local.sg
@@ -89,6 +109,7 @@ resource "tls_private_key" "key" {
   rsa_bits  = 4096
 }
 
+#https://stackoverflow.com/questions/49743220/how-do-i-create-an-ssh-key-in-terraform
 resource "aws_key_pair" "generated_key" {
   key_name   = local.key
   public_key = tls_private_key.key.public_key_openssh

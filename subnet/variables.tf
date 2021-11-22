@@ -53,6 +53,11 @@ variable "igw_id" {
   type =  string
   default = false
 }
+variable "ng_id" {
+  description = ""
+  type =  string
+  default = false
+}
 variable "common-tags" {
   description = ""
   type =  map

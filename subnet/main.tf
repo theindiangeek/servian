@@ -15,7 +15,6 @@ resource "aws_subnet" "subnet" {
 }
 
 resource "aws_route_table" "rt" {
-  count = var.map_public_ip_on_launch ? 1 : 0
   vpc_id = var.vpc_id
 }
 
@@ -29,8 +28,24 @@ resource "aws_route" "igw-route" {
   gateway_id = var.igw_id
 }
 
-resource "aws_route_table_association" "association" {
+resource "aws_route_table_association" "igw-association" {
   count = var.map_public_ip_on_launch ? 1 : 0
   subnet_id = aws_subnet.subnet.id
-  route_table_id = element(aws_route_table.rt.*.id, count.index)
+  #route_table_id = element(aws_route_table.rt.*.id, count.index)
+  route_table_id = aws_route_table.rt.id
+}
+
+resource "aws_route" "ng-route" {
+  count = try(var.map_public_ip_on_launch,0) ? 0 : 1
+  route_table_id            = element(aws_route_table.rt.*.id, count.index)
+  destination_cidr_block    = "0.0.0.0/0"
+  #vpc_peering_connection_id = aws_vpc_peering_connection.owner.id
+  nat_gateway_id = var.ng_id
+}
+
+resource "aws_route_table_association" "ng-association" {
+  count = try(var.map_public_ip_on_launch,0) ? 0 : 1
+  subnet_id = aws_subnet.subnet.id
+  #route_table_id = element(aws_route_table.rt.*.id, count.index)
+  route_table_id = aws_route_table.rt.id
 }
